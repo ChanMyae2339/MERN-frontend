@@ -7,6 +7,7 @@ import Home from "./pages/Home.jsx";
 import Contact from "./pages/Contact.jsx";
 import About from "./pages/About.jsx";
 import HomeDetail from "./pages/HomeDetail.jsx";
+import CreatePost from "./pages/CreatePost.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />}></Route>
           <Route path="/home/:id" element={<HomeDetail />} />
+          <Route path="/create-post" element={<CreatePost />} />
 
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />

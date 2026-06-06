@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Modal Component
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, children,onSave }) => {
   // Do not render if not open
   if (!isOpen) return null;
 
@@ -31,7 +31,6 @@ const Modal = ({ isOpen, onClose, children }) => {
   return (
     <div style={overlayStyle}>
       <div style={modalStyle}>
-        {/* Render the content passed to the modal */}
         {children}
         
        < div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
@@ -51,7 +50,7 @@ const Modal = ({ isOpen, onClose, children }) => {
           Cancel
         </button>
          <button 
-          onClick={onClose} 
+          onClick={onSave} 
           style={{ 
             marginTop: '15px', 
             padding: '8px 16px', 
