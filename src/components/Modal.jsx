@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
 
-// Modal Component
 const Modal = ({ isOpen, onClose, children,onSave }) => {
-  // Do not render if not open
   if (!isOpen) return null;
 
-  // Inline styles for the overlay background
   const overlayStyle = {
     position: 'fixed',
     top: 0,
@@ -19,7 +15,6 @@ const Modal = ({ isOpen, onClose, children,onSave }) => {
     zIndex: 1000,
   };
 
-  // Inline styles for the modal content box
   const modalStyle = {
     backgroundColor: '#fff',
     padding: '20px',

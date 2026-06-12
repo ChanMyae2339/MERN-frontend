@@ -47,16 +47,24 @@ const Pagination = ({
               Left{" "}
             </div>
 
-            {pagination?.paginationNumbers?.map((number) => (
+            {pagination?.paginationNumbers ? (
+              pagination?.paginationNumbers.map((number) => (
+                <div
+                  key={number}
+                  aria-current="page"
+                  className={`relative z-10 inline-flex items-center  border border-gray-300 ${currentPage === number ? "bg-green-600 text-white" : "bg-white text-gray-900"} px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer`}
+                  onClick={() => setCurrentPage(number)}
+                >
+                  {number}
+                </div>
+              ))
+            ) : (
               <div
-                key={number}
-                aria-current="page"
-                className={`relative z-10 inline-flex items-center  border border-gray-300 ${currentPage === number ? "bg-green-600 text-white" : "bg-white text-gray-900"} px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer`}
-                onClick={() => setCurrentPage(number)}
+                className={`relative z-10 inline-flex items-center  border border-gray-300 ${currentPage === 1 ? "bg-green-600 text-white" : "bg-white text-gray-900"} px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer`}
               >
-                {number}
+                {currentPage}
               </div>
-            ))}
+            )}
 
             <div
               className="relative inline-flex items-center rounded-r-md px-2 py-2 text-green-400 inset-ring inset-ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:text-black"

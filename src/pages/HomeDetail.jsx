@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
-
+import axiosApi from "../../common/api/axiosApi";
 
 const HomeDetail = () => {
   const defaultData = {
@@ -19,13 +19,9 @@ const HomeDetail = () => {
   React.useEffect(() => {
     const fetchPostDetail = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/user/home/${id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch post details");
-        }
-        const res = await response.json();
-        console.log("Fetched post details:", res);
-        setData(res);
+        const response = await axiosApi(`/user/home/${id}`);
+        console.log("Fetched post details:", response.data);
+        setData(response.data);
       } catch (error) {
         console.error("Error fetching post details:", error);
       }
@@ -34,41 +30,35 @@ const HomeDetail = () => {
   }, [id, setData]);
 
   const handleSave = async () => {
-    const response = await fetch(`http://localhost:4000/user/home/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: data.title,
-        description: data.description,
-        author: data.author,
-        type: data.type,
-      }),
+    try {
+    const response = await axiosApi.put(`/user/home/${id}`, {
+      title: data.title,
+      description: data.description,
+      author: data.author,
+      type: data.type,
     });
-    if (!response.ok) {
-      throw new Error("Failed to update post");
-    }
 
-    setData(await response.json());
+
+    
+
+    setData(await response.data);
     setIsModalOpen(false);
-    navigate(0);
+    navigate("/home");
+  } catch (error) {
+    console.error("Error updating post:", error.response);
+  }
   };
 
   const handleDelete = async () => {
-    const response = await fetch(`http://localhost:4000/user/home/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new Error("Failed to delete post");
-    }
+    try {
+      const response = await axiosApi.delete(`/user/home/${id}`);
+    console.log("Delete response:", response);
 
-    // setData(await response.json());
-    setConfirmDelete(false);
-    navigate("/");
+      setConfirmDelete(false);
+      navigate("/home");
+    } catch (error) {
+      console.error("Error deleting post:", error.response);
+    }
   };
 
   return (

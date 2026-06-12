@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import axiosApi from "../../common/api/axiosApi";
 const CreatePost = () => {
   const defaultData = {
     title: "",
@@ -11,29 +11,23 @@ const CreatePost = () => {
   const [data, setData] = React.useState(defaultData);
   const navigate = useNavigate();
   const [error, setError] = React.useState(null);
-//  console.log("error",error)
 
   const handleSave = async () => {
-    const response = await fetch(`http://localhost:4000/user/home`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: data.title,
-        description: data.description,
-        author: data.author,
-        type: data.type,
-      }),
+    try {
+    const response = await axiosApi.post("/user/home", {
+      title: data.title,
+      description: data.description,
+      author: data.author,
+      type: data.type,
     });
-    if (!response.ok) {
-      const errorData = await response.json();
-      setError(Object.keys(errorData.errors));
-      throw new Error("Failed to create post");
-    }
 
-    setData(await response.json());
-    navigate("/");
+  
+    setData( response);
+    navigate("/home");
+  } catch (error) {
+    // console.error("Error creating post:", error.response);
+    setError(Object.keys(error.response.data.errors));
+  }
   };
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -92,7 +86,7 @@ const CreatePost = () => {
         Create
       </button>
       <button
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/home")}
         className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 ml-2"
       >
         Cancel
