@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axiosApi from "../../common/api/axiosApi";
 import { useContext } from "react";
 import {AppContext} from "../Provider.jsx";
+import { toast } from "react-toastify";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -23,6 +24,7 @@ export default function Login() {
       if (res.status === 200) {
         navigate("/home");
         setAccessUser(true);
+        toast.success("Login successful!");
         console.log("Login successful:", res.data);
       } else {
         setError(res.errors || "Failed to login");

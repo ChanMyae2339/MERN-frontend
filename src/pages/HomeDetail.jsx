@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 import axiosApi from "../../common/api/axiosApi";
-
+import {toast} from "react-toastify";
 const HomeDetail = () => {
   const defaultData = {
     title: "",
@@ -29,7 +29,7 @@ const HomeDetail = () => {
     fetchPostDetail();
   }, [id, setData]);
 
-  const handleSave = async () => {
+  const handleUpdate = async () => {
     try {
     const response = await axiosApi.put(`/user/home/${id}`, {
       title: data.title,
@@ -39,13 +39,14 @@ const HomeDetail = () => {
     });
 
 
-    
+    toast.success("Post updated successfully!");
 
     setData(await response.data);
     setIsModalOpen(false);
     navigate("/home");
   } catch (error) {
     console.error("Error updating post:", error.response);
+    toast.error("Failed to update post.");
   }
   };
 
@@ -92,7 +93,7 @@ const HomeDetail = () => {
          <Modal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            onSave={handleSave}
+            onSave={handleUpdate}
           >
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Title

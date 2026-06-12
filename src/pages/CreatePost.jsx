@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axiosApi from "../../common/api/axiosApi";
+import {toast} from "react-toastify";
+
 const CreatePost = () => {
   const defaultData = {
     title: "",
@@ -21,12 +23,13 @@ const CreatePost = () => {
       type: data.type,
     });
 
-  
+    toast.success("Post created successfully!");
     setData( response);
     navigate("/home");
   } catch (error) {
     // console.error("Error creating post:", error.response);
     setError(Object.keys(error.response.data.errors));
+    toast.error("Failed to create post.");
   }
   };
   return (

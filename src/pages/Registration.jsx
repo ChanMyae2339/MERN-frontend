@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosApi from "../../common/api/axiosApi";
+import { toast } from "react-toastify";
 
 export default function Registration() {
   const [name, setName] = useState("");
@@ -22,11 +23,13 @@ export default function Registration() {
       console.log(data);
       if (res.status ===200) {
         navigate("/login");
+        toast.success("Account created successfully!");
       } else {
       setError(Object.keys(data.errors.msg));
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message );
     }
   };
   return (
